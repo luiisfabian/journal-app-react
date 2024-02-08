@@ -4,7 +4,7 @@ export const NothingSelectedView = () => {
     return (
         <>
             <Grid container spacing={0} direction='column' alignItems='center' justifyContent='center'
-                sx={{ minHeight: 'calc(100vh-110px)', backgroundColor: 'primary.main', borderRadius: 5 }}>
+                sx={{ minHeight: 'calc(100vh - 110px)', backgroundColor: 'primary.main', borderRadius: 5 }}>
 
 
                 <Grid item xs={12}>
