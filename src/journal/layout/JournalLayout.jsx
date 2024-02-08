@@ -3,23 +3,22 @@ import { NavBar, SidebarComponent } from "../components"
 
 const drawerWidth = 240;
 
-export const JournalLayout = ({children}) => {
+export const JournalLayout = ({ children }) => {
     return (
-        <>
-            <Box sx={{ dysplay: 'flex' }}>
+    
+            <Box sx={{ display: 'flex' }}>
                 {/* navbar */}
                 <NavBar drawerWidth={drawerWidth} />
 
                 {/* sidebar  */}
 
-                <SidebarComponent  drawerWidth={drawerWidth} />
+                <SidebarComponent drawerWidth={drawerWidth} />
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     {/* Toolbar  */}
                     <Toolbar />
                     {children}
                 </Box>
             </Box>
-        </>
 
     )
 }
