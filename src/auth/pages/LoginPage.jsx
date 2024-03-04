@@ -24,7 +24,7 @@ export const LoginPage = () => {
   }
 
   const onGoogleSignIn = () => {
-    dispatch(startGoogleSignIn)
+    dispatch(startGoogleSignIn())
   }
 
   return (

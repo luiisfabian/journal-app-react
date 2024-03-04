@@ -10,7 +10,8 @@ export const startGoogleSignIn = () =>{
     return async (dispatch) =>{
         console.log("entro");
         dispatch(checkingCredentials())
-        await singInWithGoogle()
-    //    const result = await singInWithGoogle();
+        // await singInWithGoogle()
+       const result = await singInWithGoogle();
+       console.log({result});
     }
 }
