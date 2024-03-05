@@ -1,17 +1,29 @@
 import { singInWithGoogle } from "../../firebase/providers";
-import { checkingCredentials } from "./authSlice";
+import { checkingCredentials, logOuth, login } from "./authSlice";
 
-export const checkAutentication  = ( email, password ) => {
+export const checkAutentication = (email, password) => {
     return async (dispatch) => {
         dispatch(checkingCredentials());
     }
 }
-export const startGoogleSignIn = () =>{
-    return async (dispatch) =>{
-        console.log("entro");
+export const startGoogleSignIn = () => {
+    return async (dispatch) => {
         dispatch(checkingCredentials())
         // await singInWithGoogle()
-       const result = await singInWithGoogle();
-       console.log({result});
+        const result = await singInWithGoogle();
+        if ( !result.ok ) return dispatch( logout( result.errorMessage ) );
+
+        dispatch(login(result))
+    }
+}
+
+
+export const startLogout = () => {
+    return async( dispatch ) => {
+        
+        await logoutFirebase();
+
+        dispatch( logout() );
+
     }
 }
