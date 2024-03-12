@@ -11,7 +11,7 @@ export const startGoogleSignIn = () => {
         dispatch(checkingCredentials())
         // await singInWithGoogle()
         const result = await singInWithGoogle();
-        if ( !result.ok ) return dispatch( logout( result.errorMessage ) );
+        if ( !result.ok ) return dispatch( logOuth( result.errorMessage ) );
 
         dispatch(login(result))
     }
@@ -23,7 +23,7 @@ export const startLogout = () => {
         
         await logoutFirebase();
 
-        dispatch( logout() );
+        dispatch( logOuth() );
 
     }
 }

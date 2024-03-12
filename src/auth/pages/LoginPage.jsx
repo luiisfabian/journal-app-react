@@ -4,8 +4,9 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Layout } from '../layout/Layout'
 import { useForm } from '../../hooks'
 import { useDispatch, useSelector } from 'react-redux'
-import { checkAutentication, startGoogleSignIn } from '../../store/auth/index'
 import { useMemo } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { checkAutentication, checkingCredentials, startGoogleSignIn } from '../../store/auth'
 
 export const LoginPage = () => {
 
@@ -22,16 +23,18 @@ export const LoginPage = () => {
   const isAuthenticating = useMemo( () => status === 'checking', [status]);
 
 
-  dispatch(checkAutentication());
+  // dispatch(checkAutentication());
 
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(email, password);
+    dispatch(checkingCredentials({email, password}))
   }
 
 
 
   const onGoogleSignIn = () => {
+    console.log("googleSingIn");
     dispatch(startGoogleSignIn())
   }
 
@@ -53,7 +56,7 @@ export const LoginPage = () => {
           <Grid container spacing={2} sx={{ mb: '2', mt: 5 }}>
 
             <Grid item xs={12} sm={3}>
-              <Button disabled={isAuthenticating} type='submit' onClick={() => dispatch} variant='contained' fullWidth>
+              <Button disabled={isAuthenticating} type='submit' variant='contained' fullWidth>
                 Login
               </Button>
             </Grid>
