@@ -3,6 +3,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Layout } from '../layout/Layout'
 import { useForm } from '../../hooks'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks'
 
 
 const formData = {
@@ -21,17 +23,21 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const dispatch = useDispatch()
+
   const [formSubmitted, setFormSubmitted] = useState(false)
 
-  const { displayName, email, password, onInputChange, formState, isFormValid, emailValid, passwordValid, displayNameValid} = useForm(formData, formValidations);
+  const { displayName, email, password, onInputChange, formState, isFormValid, emailValid, passwordValid, displayNameValid } = useForm(formData, formValidations);
 
-  console.log(displayNameValid);
 
   const onSubmit = (event) => {
-    console.log(formState);
-   setFormSubmitted(true);
     event.preventDefault()
+    setFormSubmitted(true);
 
+    if (!isFormValid) return;
+    console.log(formData);
+
+    dispatch(startCreatingUserWithEmailPassword(formState));
   }
 
 
@@ -39,7 +45,7 @@ export const RegisterPage = () => {
 
 
     <Layout title='Registro'>
-      <h1>FormValid {isFormValid ? 'Valido': 'Incorrecto'}</h1>
+      <h1>FormValid {isFormValid ? 'Valido' : 'Incorrecto'}</h1>
       <form>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 5 }}>
