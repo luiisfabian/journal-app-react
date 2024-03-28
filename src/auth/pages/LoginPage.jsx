@@ -6,13 +6,12 @@ import { useForm } from '../../hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMemo } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { checkAutentication, checkingCredentials, startGoogleSignIn } from '../../store/auth'
+import { checkAutentication, checkingCredentials, startGoogleSignIn, startLoginWithEmailPassWord } from '../../store/auth'
 import { loginWithEmailAndPassword } from '../../firebase/providers'
 
 export const LoginPage = () => {
 
   const { status, errorMessage } = useSelector(state => state.auth)
-
   const dispatch = useDispatch();
 
   const { email, password, onInputChange } = useForm({
@@ -21,22 +20,21 @@ export const LoginPage = () => {
   });
 
 
-  const isAuthenticating = useMemo( () => status === 'checking', [status]);
+  const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
 
   // dispatch(checkAutentication());
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-
-    dispatch(loginWithEmailAndPassword({email, password}))
+    dispatch(await startLoginWithEmailPassWord({ email, password }))
   }
 
 
 
   const onGoogleSignIn = () => {
     dispatch(startGoogleSignIn())
-    
+
   }
 
   return (
@@ -54,13 +52,19 @@ export const LoginPage = () => {
             <TextField label="Password" type='password' placeholder='e*****' value={password} name='password' onChange={onInputChange} fullWidth />
           </Grid>
 
-          
-          <Grid container  display={!!errorMessage ? '' : 'none'} sx={{mt:1}}>
-            <Grid item xs={12} >
-              <Alert severity='error' >{errorMessage}</Alert>
+
+
+          <Grid
+            container
+            display={!!errorMessage ? '' : 'none'}
+            sx={{ mt: 1 }}>
+            <Grid
+              item
+              xs={12}
+            >
+              <Alert severity='error'>{errorMessage}</Alert>
             </Grid>
           </Grid>
-
           <Grid container spacing={2} sx={{ mb: '2', mt: 5 }}>
 
             <Grid item xs={12} sm={3}>
