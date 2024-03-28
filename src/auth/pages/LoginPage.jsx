@@ -1,5 +1,5 @@
 import { Google } from '@mui/icons-material'
-import { Button, Grid, Link, TextField, Typography } from '@mui/material'
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { Layout } from '../layout/Layout'
 import { useForm } from '../../hooks'
@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMemo } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { checkAutentication, checkingCredentials, startGoogleSignIn } from '../../store/auth'
+import { loginWithEmailAndPassword } from '../../firebase/providers'
 
 export const LoginPage = () => {
 
-  const { status } = useSelector(state => state.auth)
+  const { status, errorMessage } = useSelector(state => state.auth)
 
   const dispatch = useDispatch();
 
@@ -27,14 +28,15 @@ export const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(email, password);
-    dispatch(checkingCredentials({email, password}))
+
+    dispatch(loginWithEmailAndPassword({email, password}))
   }
 
 
 
   const onGoogleSignIn = () => {
     dispatch(startGoogleSignIn())
+    
   }
 
   return (
@@ -50,6 +52,13 @@ export const LoginPage = () => {
 
           <Grid item xs={12} sx={{ mt: 5 }}>
             <TextField label="Password" type='password' placeholder='e*****' value={password} name='password' onChange={onInputChange} fullWidth />
+          </Grid>
+
+          
+          <Grid container  display={!!errorMessage ? '' : 'none'} sx={{mt:1}}>
+            <Grid item xs={12} >
+              <Alert severity='error' >{errorMessage}</Alert>
+            </Grid>
           </Grid>
 
           <Grid container spacing={2} sx={{ mb: '2', mt: 5 }}>
