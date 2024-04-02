@@ -9,25 +9,7 @@ import { logOuth, login } from '../../store/auth'
 
 export const AuthRoutes = () => {
 
-  const { status } = useSelector(state => state.auth)
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    onAuthStateChanged(FirebaseAuth, async (user) => {
-      console.log(user);
-
-      if (!user) return dispatch(logOuth());
-      const { uid, displayName, email, photoURL } = user
-      dispatch(login({ uid, displayName, email, photoURL }))
-    });
-
-  }, [])
-
-
-  if (status === 'checking') {
-    return <CheckingAuth />
-
-  }
   return (
     <Routes>
       <Route path='login' element={<LoginPage />}></Route>
