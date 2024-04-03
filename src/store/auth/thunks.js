@@ -1,4 +1,4 @@
-import { loginWithEmailAndPassword, registerWithEmailAndPassword, singInWithGoogle } from "../../firebase/providers";
+import { loginWithEmailAndPassword, logoutFirebase, registerWithEmailAndPassword, singInWithGoogle } from "../../firebase/providers";
 import { checkingCredentials, logOuth, login } from "./authSlice";
 
 export const checkAutentication = (email, password) => {

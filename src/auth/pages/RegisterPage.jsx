@@ -51,7 +51,7 @@ export const RegisterPage = () => {
 
     <Layout title='Registro'>
       <h1>FormValid {isFormValid ? 'Valido' : 'Incorrecto'}</h1>
-      <form>
+      <form className="animate__animated animate__fadeIn animate__faster">
         <Grid container>
           <Grid item xs={12} sx={{ mt: 5 }}>
             <TextField helperText={displayNameValid} error={!!displayNameValid && formSubmitted} name='displayName' value={displayName} onChange={onInputChange} label="Nombre Completo" type='text' placeholder='Nombre' fullWidth />
